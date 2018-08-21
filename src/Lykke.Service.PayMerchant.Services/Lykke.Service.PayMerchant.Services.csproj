@@ -6,6 +6,9 @@
     <Version>1.0.0</Version>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Lykke.Service.PayMerchant.Core\Lykke.Service.PayMerchant.Core.csproj" />
   </ItemGroup>
 </Project>

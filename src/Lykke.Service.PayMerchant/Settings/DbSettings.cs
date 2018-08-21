@@ -6,5 +6,8 @@ namespace Lykke.Service.PayMerchant.Settings
     {
         [AzureTableCheck]
         public string LogsConnString { get; set; }
+
+        [AzureTableCheck]
+        public string MerchantConnString { get; set; }
     }
 }

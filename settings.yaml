@@ -3,6 +3,9 @@
       LogsConnString:
         settings-key: LogsConnString
         types: [AzureTableStorage]
+      MerchantConnString:
+        settings-key: MerchantConnString
+        types: [AzureTableStorage, Tag]
   MonitoringServiceClient:
     MonitoringServiceUrl:
       settings-key: MonitoringServiceUrl
