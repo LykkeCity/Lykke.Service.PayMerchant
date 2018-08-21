@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Lykke.Service.PayMerchant.Core.Services;
+using Lykke.Service.PayMerchant.Services;
 using Lykke.Service.PayMerchant.Settings;
 using Lykke.SettingsReader;
 
@@ -15,7 +17,8 @@ namespace Lykke.Service.PayMerchant.Modules
 
         protected override void Load(ContainerBuilder builder)
         {
-            // Do not register entire settings in container, pass necessary settings to services which requires them
+            builder.RegisterType<MerchantService>()
+                .As<IMerchantService>();
         }
     }
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Lykke.Service.PayMerchant.Client</name>
+    </assembly>
+    <members>
+        <member name="M:Lykke.Service.PayMerchant.Client.AutofacExtension.RegisterPayMerchantClient(Autofac.ContainerBuilder,Lykke.Service.PayMerchant.Client.PayMerchantServiceClientSettings,System.Func{Lykke.HttpClientGenerator.HttpClientGeneratorBuilder,Lykke.HttpClientGenerator.HttpClientGeneratorBuilder})">
+            <summary>
+            Registers <see cref="T:Lykke.Service.PayMerchant.Client.IPayMerchantClient"/> in Autofac container using <see cref="T:Lykke.Service.PayMerchant.Client.PayMerchantServiceClientSettings"/>.
+            </summary>
+            <param name="builder">Autofac container builder.</param>
+            <param name="settings">PayMerchant client settings.</param>
+            <param name="builderConfigure">Optional <see cref="T:Lykke.HttpClientGenerator.HttpClientGeneratorBuilder"/> configure handler.</param>
+        </member>
+        <member name="T:Lykke.Service.PayMerchant.Client.IPayMerchantApi">
+            <summary>
+            PayMerchant client API interface.
+            </summary>
+        </member>
+        <member name="T:Lykke.Service.PayMerchant.Client.IPayMerchantClient">
+            <summary>
+            PayMerchant client interface.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.IPayMerchantClient.Api">
+            <summary>Application Api interface</summary>
+        </member>
+        <member name="T:Lykke.Service.PayMerchant.Client.PayMerchantClient">
+            <summary>
+            PayMerchant API aggregating interface.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.PayMerchantClient.Api">
+            <summary>Inerface to PayMerchant Api.</summary>
+        </member>
+        <member name="M:Lykke.Service.PayMerchant.Client.PayMerchantClient.#ctor(Lykke.HttpClientGenerator.IHttpClientGenerator)">
+            <summary>C-tor</summary>
+        </member>
+        <member name="T:Lykke.Service.PayMerchant.Client.PayMerchantServiceClientSettings">
+            <summary>
+            PayMerchant client settings.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.PayMerchantServiceClientSettings.ServiceUrl">
+            <summary>Service url.</summary>
+        </member>
+    </members>
+</doc>
