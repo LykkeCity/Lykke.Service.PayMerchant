@@ -5,18 +5,18 @@ namespace Lykke.Service.PayMerchant.Modules
 {
     public class AutoMapperModule : Module
     {
-        private readonly IContainer _container;
+        private readonly IComponentContext _componentContext;
 
-        public AutoMapperModule(IContainer container)
+        public AutoMapperModule(IComponentContext componentContext)
         {
-            _container = container;
+            _componentContext = componentContext;
         }
 
         protected override void Load(ContainerBuilder builder)
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.ConstructServicesUsing(_container.Resolve);
+                cfg.ConstructServicesUsing(_componentContext.Resolve);
                 cfg.AddProfiles(typeof(AutoMapperProfile));
                 cfg.AddProfiles(typeof(AzureRepositories.AutoMapperProfile));
             });
