@@ -8,12 +8,6 @@ namespace Lykke.Service.PayMerchant.Models
     public class UpdateMerchantRequest
     {
         /// <summary>
-        /// Gets or sets merchant id
-        /// </summary>
-        [Required]
-        public string Id { get; set; }
-
-        /// <summary>
         /// Gets or sets merchant name
         /// </summary>
         [Required]
