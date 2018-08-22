@@ -13,6 +13,9 @@ namespace Lykke.Service.PayMerchant
             CreateMap<CreateMerchantRequest, Merchant>(MemberList.Destination)
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.PublicKey, opt => opt.Ignore());
+
+            CreateMap<UpdateMerchantRequest, Merchant>(MemberList.Destination)
+                .ForMember(dest => dest.PublicKey, opt => opt.Ignore());
         }
     }
 }
