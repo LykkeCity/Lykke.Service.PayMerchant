@@ -14,13 +14,13 @@ using Lykke.Service.PayMerchant.Core.Domain;
 using Lykke.Service.PayMerchant.Core.Exceptions;
 using Lykke.Service.PayMerchant.Core.Services;
 using Lykke.Service.PayMerchant.Models;
+using LykkePay.Common.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Lykke.Service.PayMerchant.Controllers
 {
-    [ApiController]
     [Route("api/merchants")]
     public class MerchantsController : ControllerBase
     {
@@ -96,6 +96,7 @@ namespace Lykke.Service.PayMerchant.Controllers
         [SwaggerOperation("MerchantsCreate")]
         [ProducesResponseType(typeof(MerchantModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        [ValidateModel]
         public async Task<IActionResult> CreateAsync([FromBody] CreateMerchantRequest request)
         {
             try
@@ -126,13 +127,14 @@ namespace Lykke.Service.PayMerchant.Controllers
         /// </summary>
         /// <param name="request">The merchant update request.</param>
         /// <response code="204">The merchant successfully updated.</response>
-        /// <response code="400">Invalid model.</response>
+        /// <response code="400">Invalid model, duplicated api key</response>
         /// <response code="404">The merchant not found.</response>
         [HttpPatch]
         [SwaggerOperation("MerchantsUpdate")]
         [ProducesResponseType((int) HttpStatusCode.NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.NotFound)]
+        [ValidateModel]
         public async Task<IActionResult> UpdateAsync([FromBody] UpdateMerchantRequest request)
         {
             try
@@ -149,11 +151,17 @@ namespace Lykke.Service.PayMerchant.Controllers
 
                 return BadRequest(ErrorResponse.Create(e.Message));
             }
-            catch (MerchantNotFoundException exception)
+            catch (MerchantNotFoundException e)
             {
-                _log.Warning(exception.Message, context: request.ToDetails());
+                _log.Warning(e.Message, context: request.ToDetails());
 
-                return NotFound(ErrorResponse.Create(exception.Message));
+                return NotFound(ErrorResponse.Create(e.Message));
+            }
+            catch (DuplicateMerchantApiKeyException e)
+            {
+                _log.Error(e, context: request.ToDetails());
+
+                return BadRequest(ErrorResponse.Create(e.Message));
             }
         }
 
@@ -171,6 +179,7 @@ namespace Lykke.Service.PayMerchant.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
+        [ValidateModel]
         public async Task<IActionResult> SetPublicKeyAsync(string merchantId, IFormFile file)
         {
             merchantId = Uri.UnescapeDataString(merchantId);

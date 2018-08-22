@@ -54,6 +54,14 @@ namespace Lykke.Service.PayMerchant.Services
             if (existingMerchant == null)
                 throw new MerchantNotFoundException(merchant.Name);
 
+            if (merchant.ApiKey != existingMerchant.ApiKey)
+            {
+                IReadOnlyList<IMerchant> merchants = await _merchantRepository.FindAsync(merchant.ApiKey);
+
+                if (merchants.Count > 0)
+                    throw new DuplicateMerchantApiKeyException(merchant.ApiKey);
+            }
+
             Mapper.Map(merchant, existingMerchant);
 
             await _merchantRepository.ReplaceAsync(existingMerchant);
