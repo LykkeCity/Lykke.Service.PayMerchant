@@ -44,16 +44,6 @@ namespace Lykke.Service.PayMerchant.Client
         Task UpdateAsync([Body] UpdateMerchantRequest request);
 
         /// <summary>
-        /// Updates merchant's public key
-        /// </summary>
-        /// <param name="merchantId"></param>
-        /// <param name="stream"></param>
-        /// <returns></returns>
-        [Multipart]
-        [Post("/api/merchants/{merchantId}/publickey")]
-        Task SetPublicKeyAsync(string merchantId, [AliasAs("file")] StreamPart stream);
-
-        /// <summary>
         /// Deletes merchant by id
         /// </summary>
         /// <param name="merchantId"></param>

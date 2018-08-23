@@ -14,8 +14,6 @@ namespace Lykke.Service.PayMerchant.Core.Services
 
         Task UpdateAsync(IMerchant merchant);
 
-        Task SetPublicKeyAsync(string merchantName, string publicKey);
-
         Task DeleteAsync(string merchantName);
     }
 }
