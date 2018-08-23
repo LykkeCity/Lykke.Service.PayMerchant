@@ -24,8 +24,6 @@ namespace Lykke.Service.PayMerchant.AzureRepositories
 
         public string DisplayName { get; set; }
 
-        public string PublicKey { get; set; }
-
         public string ApiKey { get; set; }
 
         public string LwId { get; set; }

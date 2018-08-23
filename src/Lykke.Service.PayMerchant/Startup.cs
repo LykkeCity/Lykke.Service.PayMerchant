@@ -1,13 +1,8 @@
 ﻿using JetBrains.Annotations;
-using Lykke.Logs.Loggers.LykkeSlack;
 using Lykke.Sdk;
-using Lykke.Sdk.Health;
-using Lykke.Sdk.Middleware;
 using Lykke.Service.PayMerchant.Settings;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System;
 
 namespace Lykke.Service.PayMerchant
