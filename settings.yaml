@@ -1,0 +1,17 @@
+  PayMerchantService:
+    Db:
+      LogsConnString:
+        settings-key: LogsConnString
+        types: [AzureTableStorage]
+      MerchantConnString:
+        settings-key: MerchantConnString
+        types: [AzureTableStorage, Tag]
+  MonitoringServiceClient:
+    MonitoringServiceUrl:
+      settings-key: MonitoringServiceUrl
+  SlackNotifications:
+    AzureQueue:
+      ConnectionString:
+        settings-key: SlackNotificationsConnString
+        types: [AzureTableStorage]
+      QueueName: slack-notifications

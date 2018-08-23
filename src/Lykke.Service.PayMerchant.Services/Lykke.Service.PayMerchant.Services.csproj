@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>Lykke.Service.PayMerchant.Services</AssemblyName>
+    <RootNamespace>Lykke.Service.PayMerchant.Services</RootNamespace>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lykke.Service.PayMerchant.Core\Lykke.Service.PayMerchant.Core.csproj" />
+  </ItemGroup>
+</Project>
