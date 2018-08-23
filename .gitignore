@@ -60,3 +60,5 @@ node_modules
 **/appsettings.json
 **/appsettings.*.json
 **/*sonar*
+/client/Lykke.Service.PayMerchant.Client/Lykke.Service.PayMerchant.Client.xml
+/client/Lykke.Service.PayMerchant.Client/Lykke.Service.PayMerchant.Client.xml
