@@ -8,8 +8,6 @@
 
         string DisplayName { get; set; }
 
-        string PublicKey { get; set; }
-
         string ApiKey { get; set; }
 
         string LwId { get; set; }

@@ -21,11 +21,6 @@
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets merchant public key
-        /// </summary>
-        public string PublicKey { get; set; }
-
-        /// <summary>
         /// Gets or sets merchant api key
         /// </summary>
         public string ApiKey { get; set; }

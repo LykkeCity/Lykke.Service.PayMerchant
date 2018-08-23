@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using Common;
 using Common.Log;
 using JetBrains.Annotations;
 using Lykke.Common.Api.Contract.Responses;
@@ -15,7 +13,6 @@ using Lykke.Service.PayMerchant.Core.Exceptions;
 using Lykke.Service.PayMerchant.Core.Services;
 using Lykke.Service.PayMerchant.Models;
 using LykkePay.Common.Validation;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -162,52 +159,6 @@ namespace Lykke.Service.PayMerchant.Controllers
                 _log.Error(e, context: request.ToDetails());
 
                 return BadRequest(ErrorResponse.Create(e.Message));
-            }
-        }
-
-        /// <summary>
-        /// Sets merchant public key.
-        /// </summary>
-        /// <param name="merchantId">The merchant id.</param>
-        /// <param name="file">The public key file.</param>
-        /// <response code="204">The public key successfully updated.</response>
-        /// <response code="400">Merchant id is not valid</response>
-        /// <response code="404">The merchant not found.</response>
-        [HttpPost]
-        [Route("{merchantId}/publickey")]
-        [SwaggerOperation("MerchantsSetPublicKey")]
-        [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
-        [ValidateModel]
-        public async Task<IActionResult> SetPublicKeyAsync(string merchantId, IFormFile file)
-        {
-            merchantId = Uri.UnescapeDataString(merchantId);
-
-            if (file == null || file.Length == 0)
-                return BadRequest(ErrorResponse.Create("Empty file"));
-
-            try
-            {
-                var fileContent = await file.OpenReadStream().ToBytesAsync();
-
-                string publicKey = Encoding.UTF8.GetString(fileContent, 0, fileContent.Length);
-
-                await _merchantService.SetPublicKeyAsync(merchantId, publicKey);
-
-                return NoContent();
-            }
-            catch (InvalidRowKeyValueException e)
-            {
-                _log.Error(e, $"{e.Variable}: {e.Value}");
-
-                return BadRequest(ErrorResponse.Create(e.Message));
-            }
-            catch (MerchantNotFoundException e)
-            {
-                _log.Warning(e.Message, context: $"MerchantId = {merchantId}");
-
-                return NotFound(ErrorResponse.Create(e.Message));
             }
         }
 

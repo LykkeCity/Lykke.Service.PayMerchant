@@ -69,20 +69,6 @@ namespace Lykke.Service.PayMerchant.Services
             _log.Info("Merchant updated", merchant);
         }
 
-        public async Task SetPublicKeyAsync(string merchantName, string publicKey)
-        {
-            IMerchant merchant = await _merchantRepository.GetAsync(merchantName);
-
-            if (merchant == null)
-                throw new MerchantNotFoundException(merchantName);
-
-            merchant.PublicKey = publicKey;
-
-            await _merchantRepository.ReplaceAsync(merchant);
-
-            _log.Info("Merchant public key updated", merchant);
-        }
-
         public async Task DeleteAsync(string merchantName)
         {
             await _merchantRepository.DeleteAsync(merchantName);

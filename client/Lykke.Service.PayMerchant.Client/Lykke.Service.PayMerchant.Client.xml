@@ -17,6 +17,40 @@
             PayMerchant client API interface.
             </summary>
         </member>
+        <member name="M:Lykke.Service.PayMerchant.Client.IPayMerchantApi.GetAllAsync">
+            <summary>
+            Get all merchants
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Lykke.Service.PayMerchant.Client.IPayMerchantApi.GetByIdAsync(System.String)">
+            <summary>
+            Get merchant by id
+            </summary>
+            <param name="merchantId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lykke.Service.PayMerchant.Client.IPayMerchantApi.CreateAsync(Lykke.Service.PayMerchant.Client.Models.CreateMerchantRequest)">
+            <summary>
+            Creates merchant
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lykke.Service.PayMerchant.Client.IPayMerchantApi.UpdateAsync(Lykke.Service.PayMerchant.Client.Models.UpdateMerchantRequest)">
+            <summary>
+            Updates merchant
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lykke.Service.PayMerchant.Client.IPayMerchantApi.DeleteAsync(System.String)">
+            <summary>
+            Deletes merchant by id
+            </summary>
+            <param name="merchantId"></param>
+            <returns></returns>
+        </member>
         <member name="T:Lykke.Service.PayMerchant.Client.IPayMerchantClient">
             <summary>
             PayMerchant client interface.
@@ -24,6 +58,91 @@
         </member>
         <member name="P:Lykke.Service.PayMerchant.Client.IPayMerchantClient.Api">
             <summary>Application Api interface</summary>
+        </member>
+        <member name="T:Lykke.Service.PayMerchant.Client.Models.CreateMerchantRequest">
+            <summary>
+            The merchant create request.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.Models.CreateMerchantRequest.Name">
+            <summary>
+            Gets or sets the merchant name.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.Models.CreateMerchantRequest.DisplayName">
+            <summary>
+            Gets ot sets the merchant display name
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.Models.CreateMerchantRequest.ApiKey">
+            <summary>
+            Gets or sets the merchant api key.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.Models.CreateMerchantRequest.LwId">
+            <summary>
+            Gets or sets the merchant Lykke wallet client id.
+            </summary>
+        </member>
+        <member name="T:Lykke.Service.PayMerchant.Client.Models.MerchantModel">
+            <summary>
+            Represent a merchant.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.Models.MerchantModel.Id">
+            <summary>
+            Gets or sets the merchant id.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.Models.MerchantModel.Name">
+            <summary>
+            Gets or sets the merchant name.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.Models.MerchantModel.DisplayName">
+            <summary>
+            Gets ot sets the merchant display name
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.Models.MerchantModel.ApiKey">
+            <summary>
+            Gets or sets the merchant api key.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.Models.MerchantModel.LwId">
+            <summary>
+            Gets or sets the merchant Lykke wallet client id.
+            </summary>
+        </member>
+        <member name="T:Lykke.Service.PayMerchant.Client.Models.UpdateMerchantRequest">
+            <summary>
+            The merchant update request.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.Models.UpdateMerchantRequest.Id">
+            <summary>
+            Gets or sets the merchant id.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.Models.UpdateMerchantRequest.Name">
+            <summary>
+            Gets or sets the merchant name.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.Models.UpdateMerchantRequest.DisplayName">
+            <summary>
+            Gets ot sets the merchant display name
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.Models.UpdateMerchantRequest.ApiKey">
+            <summary>
+            Gets or sets the merchant api key.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.Models.UpdateMerchantRequest.LwId">
+            <summary>
+            Gets or sets the merchant Lykke wallet client id.
+            </summary>
         </member>
         <member name="T:Lykke.Service.PayMerchant.Client.PayMerchantClient">
             <summary>
@@ -43,6 +162,30 @@
         </member>
         <member name="P:Lykke.Service.PayMerchant.Client.PayMerchantServiceClientSettings.ServiceUrl">
             <summary>Service url.</summary>
+        </member>
+        <member name="T:Lykke.Service.PayMerchant.Client.AutoGeneratedIPayMerchantApi">
+            <inheritdoc />
+        </member>
+        <member name="P:Lykke.Service.PayMerchant.Client.AutoGeneratedIPayMerchantApi.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Lykke.Service.PayMerchant.Client.AutoGeneratedIPayMerchantApi.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Lykke.Service.PayMerchant.Client.AutoGeneratedIPayMerchantApi.GetAllAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Lykke.Service.PayMerchant.Client.AutoGeneratedIPayMerchantApi.GetByIdAsync(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Lykke.Service.PayMerchant.Client.AutoGeneratedIPayMerchantApi.CreateAsync(Lykke.Service.PayMerchant.Client.Models.CreateMerchantRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Lykke.Service.PayMerchant.Client.AutoGeneratedIPayMerchantApi.UpdateAsync(Lykke.Service.PayMerchant.Client.Models.UpdateMerchantRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Lykke.Service.PayMerchant.Client.AutoGeneratedIPayMerchantApi.DeleteAsync(System.String)">
+            <inheritdoc />
         </member>
     </members>
 </doc>
