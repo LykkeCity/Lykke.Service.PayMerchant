@@ -19,6 +19,9 @@ namespace Lykke.Service.PayMerchant.Modules
         {
             builder.RegisterType<MerchantService>()
                 .As<IMerchantService>();
+
+            builder.RegisterType<MerchantGroupService>()
+                .As<IMerchantGroupService>();
         }
     }
 }
