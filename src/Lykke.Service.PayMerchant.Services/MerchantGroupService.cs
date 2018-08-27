@@ -81,7 +81,7 @@ namespace Lykke.Service.PayMerchant.Services
 
             return groups
                 .Where(x => x.MerchantGroupUse == merchantGroupUse)
-                .SelectMany(x => x.Merchants?.Split(";"))
+                .SelectMany(x => x.Merchants?.Split(AzureRepositories.Constants.Separator))
                 .Distinct()
                 .ToList();
         }
