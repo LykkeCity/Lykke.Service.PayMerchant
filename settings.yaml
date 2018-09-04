@@ -1,10 +1,10 @@
   PayMerchantService:
     Db:
       LogsConnString:
-        settings-key: LogsConnString
+        settings-key: LykkePayLogsConnString
         types: [AzureTableStorage]
       MerchantConnString:
-        settings-key: MerchantConnString
+        settings-key: LykkePayMerchantDataConnString
         types: [AzureTableStorage, Tag]
   MonitoringServiceClient:
     MonitoringServiceUrl:
