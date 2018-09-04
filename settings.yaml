@@ -2,13 +2,14 @@
     Db:
       LogsConnString:
         settings-key: LykkePayLogsConnString
-        types: [AzureTableStorage]
+        types: [AzureTableStorage, Tag]
       MerchantConnString:
         settings-key: LykkePayMerchantDataConnString
         types: [AzureTableStorage, Tag]
   MonitoringServiceClient:
     MonitoringServiceUrl:
       settings-key: MonitoringServiceUrl
+      types: [Tag]
   SlackNotifications:
     AzureQueue:
       ConnectionString:
