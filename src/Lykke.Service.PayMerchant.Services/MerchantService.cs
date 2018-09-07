@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
 using Common.Log;
 using JetBrains.Annotations;
 using Lykke.Common.Log;
@@ -47,26 +46,27 @@ namespace Lykke.Service.PayMerchant.Services
             return createdMerchant;
         }
 
-        public async Task UpdateAsync(IMerchant merchant)
+        public async Task UpdateAsync(IMerchant srcMerchant)
         {
-            IMerchant existingMerchant = await _merchantRepository.GetAsync(merchant.Name);
+            IMerchant existingMerchant = await _merchantRepository.GetAsync(srcMerchant.Name);
 
             if (existingMerchant == null)
-                throw new MerchantNotFoundException(merchant.Name);
+                throw new MerchantNotFoundException(srcMerchant.Name);
 
-            if (merchant.ApiKey != existingMerchant.ApiKey)
+            if (srcMerchant.ApiKey != existingMerchant.ApiKey)
             {
-                IReadOnlyList<IMerchant> merchants = await _merchantRepository.FindAsync(merchant.ApiKey);
+                IReadOnlyList<IMerchant> merchants = await _merchantRepository.FindAsync(srcMerchant.ApiKey);
 
                 if (merchants.Count > 0)
-                    throw new DuplicateMerchantApiKeyException(merchant.ApiKey);
+                    throw new DuplicateMerchantApiKeyException(srcMerchant.ApiKey);
             }
 
-            Mapper.Map(merchant, existingMerchant);
+            if (string.IsNullOrEmpty(srcMerchant.Email))
+                srcMerchant.Email = existingMerchant.Email;
 
-            await _merchantRepository.ReplaceAsync(existingMerchant);
+            await _merchantRepository.ReplaceAsync(srcMerchant);
 
-            _log.Info("Merchant updated", merchant);
+            _log.Info("Merchant updated", srcMerchant);
         }
 
         public async Task DeleteAsync(string merchantName)
