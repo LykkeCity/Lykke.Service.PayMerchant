@@ -31,5 +31,12 @@ namespace Lykke.Service.PayMerchant.Models
         /// Gets or sets merchant Lykke wallet id
         /// </summary>
         public string LwId { get; set; }
+
+        /// <summary>
+        /// Gets or sers merchant's email address
+        /// </summary>
+        [Required]
+        [Email]
+        public string Email { get; set; }
     }
 }
