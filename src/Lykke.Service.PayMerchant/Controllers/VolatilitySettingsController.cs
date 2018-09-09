@@ -136,7 +136,7 @@ namespace Lykke.Service.PayMerchant.Controllers
         }
 
         /// <summary>
-        /// Deletes volatility settings for merchant
+        /// Delete volatility settings for merchant
         /// </summary>
         /// <param name="merchantId">Merchant id</param>
         /// <response code="200">Volatility settings successfully deleted</response>
