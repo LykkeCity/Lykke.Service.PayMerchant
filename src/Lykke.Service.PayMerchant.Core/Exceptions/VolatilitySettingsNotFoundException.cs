@@ -9,7 +9,7 @@ namespace Lykke.Service.PayMerchant.Core.Exceptions
         {
         }
 
-        public VolatilitySettingsNotFoundException(string merchantId) : base("Merchant volatility settigs not found")
+        public VolatilitySettingsNotFoundException(string merchantId) : base("Merchant volatility settings not found")
         {
             MerchantId = merchantId;
         }
