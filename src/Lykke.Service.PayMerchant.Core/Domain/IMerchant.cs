@@ -11,5 +11,7 @@
         string ApiKey { get; set; }
 
         string LwId { get; set; }
+
+        string Email { get; set; }
     }
 }

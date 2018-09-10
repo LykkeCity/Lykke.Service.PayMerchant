@@ -12,7 +12,7 @@ namespace Lykke.Service.PayMerchant.Core.Services
 
         Task<IMerchant> CreateAsync(IMerchant merchant);
 
-        Task UpdateAsync(IMerchant merchant);
+        Task UpdateAsync(IMerchant srcMerchant);
 
         Task DeleteAsync(string merchantName);
     }

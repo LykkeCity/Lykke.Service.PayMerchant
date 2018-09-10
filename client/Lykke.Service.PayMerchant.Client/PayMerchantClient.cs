@@ -17,13 +17,19 @@ namespace Lykke.Service.PayMerchant.Client
         /// <summary>
         /// Interface to PayMerchant Groups Api
         /// </summary>
-        public IPayMerchantGroupsApi GroupsApi { get; private set; }
+        public IPayMerchantGroupsApi Groups { get; private set; }
+
+        /// <summary>
+        /// Interface tp PayMerchant Settings Api
+        /// </summary>
+        public IPayMerchantSettingsApi Settings { get; set; }
 
         /// <summary>C-tor</summary>
         public PayMerchantClient(IHttpClientGenerator httpClientGenerator)
         {
             Api = httpClientGenerator.Generate<IPayMerchantApi>();
-            GroupsApi = httpClientGenerator.Generate<IPayMerchantGroupsApi>();
+            Groups = httpClientGenerator.Generate<IPayMerchantGroupsApi>();
+            Settings = httpClientGenerator.Generate<IPayMerchantSettingsApi>();
         }
     }
 }

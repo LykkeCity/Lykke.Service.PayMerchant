@@ -22,6 +22,7 @@ namespace Lykke.Service.PayMerchant.Modules
         {
             const string merchantsTableName = "Merchants";
             const string merchantGroupsTableName = "MerchantGroups";
+            const string merchantVolatilitySettingsTableName = "MerchantVolatilitySettings";
 
             builder.Register(c =>
                     new MerchantRepository(AzureTableStorage<MerchantEntity>.Create(
@@ -39,6 +40,13 @@ namespace Lykke.Service.PayMerchant.Modules
                         _appSettings.ConnectionString(x => x.PayMerchantService.Db.MerchantConnString),
                         merchantGroupsTableName, c.Resolve<ILogFactory>())))
                 .As<IMerchantGroupRepository>()
+                .SingleInstance();
+
+            builder.Register(c => new VolatilitySettingsRepository(
+                    AzureTableStorage<VolatilitySettingsEntity>.Create(
+                        _appSettings.ConnectionString(x => x.PayMerchantService.Db.MerchantConnString),
+                        merchantVolatilitySettingsTableName, c.Resolve<ILogFactory>())))
+                .As<IVolatilitySettingsRepository>()
                 .SingleInstance();
         }
     }

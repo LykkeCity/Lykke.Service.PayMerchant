@@ -29,5 +29,10 @@
         /// Gets or sets merchant Lykke wallet id
         /// </summary>
         public string LwId { get; set; }
+
+        /// <summary>
+        /// Gets or sets merchant's email address
+        /// </summary>
+        public string Email { get; set; }
     }
 }

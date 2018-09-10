@@ -9,13 +9,18 @@ namespace Lykke.Service.PayMerchant.Client
     public interface IPayMerchantClient
     {
         /// <summary>
-        /// Merchants Api interface
+        /// Merchants API
         /// </summary>
         IPayMerchantApi Api { get; }
 
         /// <summary>
-        /// Merchant groups Api interface
+        /// Merchant groups API
         /// </summary>
-        IPayMerchantGroupsApi GroupsApi { get; }
+        IPayMerchantGroupsApi Groups { get; }
+
+        /// <summary>
+        /// Merchant settings API
+        /// </summary>
+        IPayMerchantSettingsApi Settings { get; set; }
     }
 }
