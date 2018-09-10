@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Common.Log;
 using JetBrains.Annotations;
@@ -34,10 +35,15 @@ namespace Lykke.Service.PayMerchant.Services
 
         public async Task<IMerchant> CreateAsync(IMerchant merchant)
         {
-            IReadOnlyList<IMerchant> merchants = await _merchantRepository.FindAsync(merchant.ApiKey);
+            IReadOnlyList<IMerchant> apiKeyMerchants = await _merchantRepository.FindApiKeyAsync(merchant.ApiKey);
 
-            if (merchants.Count > 0)
+            if (apiKeyMerchants.Any())
                 throw new DuplicateMerchantApiKeyException(merchant.ApiKey);
+
+            IReadOnlyList<IMerchant> emailMerchants = await _merchantRepository.FindEmailAsync(merchant.Email);
+
+            if (emailMerchants.Any())
+                throw new DuplicateMerchantEmailException(merchant.Email);
 
             IMerchant createdMerchant = await _merchantRepository.InsertAsync(merchant);
 
@@ -55,10 +61,18 @@ namespace Lykke.Service.PayMerchant.Services
 
             if (srcMerchant.ApiKey != existingMerchant.ApiKey)
             {
-                IReadOnlyList<IMerchant> merchants = await _merchantRepository.FindAsync(srcMerchant.ApiKey);
+                IReadOnlyList<IMerchant> merchants = await _merchantRepository.FindApiKeyAsync(srcMerchant.ApiKey);
 
-                if (merchants.Count > 0)
+                if (merchants.Any())
                     throw new DuplicateMerchantApiKeyException(srcMerchant.ApiKey);
+            }
+
+            if (srcMerchant.Email != existingMerchant.Email)
+            {
+                IReadOnlyList<IMerchant> merchants = await _merchantRepository.FindEmailAsync(srcMerchant.Email);
+
+                if (merchants.Any())
+                    throw new DuplicateMerchantEmailException(srcMerchant.Email);
             }
 
             if (string.IsNullOrEmpty(srcMerchant.Email))

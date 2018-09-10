@@ -88,7 +88,7 @@ namespace Lykke.Service.PayMerchant.Controllers
         /// <returns>The created merchant.</returns>
         /// <param name="request">The merchant create request.</param>
         /// <response code="200">The created merchant.</response>
-        /// <response code="400">Invalid model, duplicate merchant name or api key</response>
+        /// <response code="400">Invalid model, duplicate merchant name, api key or email</response>
         [HttpPost]
         [SwaggerOperation("MerchantsCreate")]
         [ProducesResponseType(typeof(MerchantModel), (int)HttpStatusCode.OK)]
@@ -111,7 +111,8 @@ namespace Lykke.Service.PayMerchant.Controllers
                 return BadRequest(ErrorResponse.Create(e.Message));
             }
             catch (Exception exception) when (exception is DuplicateMerchantNameException ||
-                                              exception is DuplicateMerchantApiKeyException)
+                                              exception is DuplicateMerchantApiKeyException ||
+                                              exception is DuplicateMerchantEmailException)
             {
                 _log.Warning(exception.Message, context: request.ToDetails());
 
@@ -155,6 +156,12 @@ namespace Lykke.Service.PayMerchant.Controllers
                 return NotFound(ErrorResponse.Create(e.Message));
             }
             catch (DuplicateMerchantApiKeyException e)
+            {
+                _log.Error(e, context: request.ToDetails());
+
+                return BadRequest(ErrorResponse.Create(e.Message));
+            }
+            catch (DuplicateMerchantEmailException e)
             {
                 _log.Error(e, context: request.ToDetails());
 
