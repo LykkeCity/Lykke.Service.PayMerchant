@@ -23,11 +23,13 @@ namespace Lykke.Service.PayMerchant.Modules
             const string merchantsTableName = "Merchants";
             const string merchantGroupsTableName = "MerchantGroups";
 
-            builder.Register(c =>
-                    new MerchantRepository(AzureTableStorage<MerchantEntity>.Create(
+            builder.Register(c => new MerchantRepository(
+                    AzureTableStorage<MerchantEntity>.Create(
                         _appSettings.ConnectionString(x => x.PayMerchantService.Db.MerchantConnString),
-                        merchantsTableName,
-                        c.Resolve<ILogFactory>())))
+                        merchantsTableName, c.Resolve<ILogFactory>()),
+                    AzureTableStorage<AzureIndex>.Create(
+                        _appSettings.ConnectionString(x => x.PayMerchantService.Db.MerchantConnString),
+                        merchantsTableName, c.Resolve<ILogFactory>())))
                 .As<IMerchantRepository>()
                 .SingleInstance();
 

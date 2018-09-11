@@ -40,9 +40,9 @@ namespace Lykke.Service.PayMerchant.Services
             if (apiKeyMerchants.Any())
                 throw new DuplicateMerchantApiKeyException(merchant.ApiKey);
 
-            IReadOnlyList<IMerchant> emailMerchants = await _merchantRepository.FindEmailAsync(merchant.Email);
+            IMerchant emailMerchant = await _merchantRepository.FindEmailAsync(merchant.Email);
 
-            if (emailMerchants.Any())
+            if (emailMerchant != null)
                 throw new DuplicateMerchantEmailException(merchant.Email);
 
             IMerchant createdMerchant = await _merchantRepository.InsertAsync(merchant);
@@ -65,14 +65,6 @@ namespace Lykke.Service.PayMerchant.Services
 
                 if (merchants.Any())
                     throw new DuplicateMerchantApiKeyException(srcMerchant.ApiKey);
-            }
-
-            if (srcMerchant.Email != existingMerchant.Email)
-            {
-                IReadOnlyList<IMerchant> merchants = await _merchantRepository.FindEmailAsync(srcMerchant.Email);
-
-                if (merchants.Any())
-                    throw new DuplicateMerchantEmailException(srcMerchant.Email);
             }
 
             if (string.IsNullOrEmpty(srcMerchant.Email))
