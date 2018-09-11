@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using AutoMapper;
 using AzureStorage;
-using Common;
+using AzureStorage.Tables.Templates.Index;
+using JetBrains.Annotations;
 using Lykke.Service.PayMerchant.Core.Domain;
 using Lykke.Service.PayMerchant.Core.Exceptions;
 
@@ -14,13 +13,14 @@ namespace Lykke.Service.PayMerchant.AzureRepositories
     public class MerchantRepository : IMerchantRepository
     {
         private readonly INoSQLTableStorage<MerchantEntity> _storage;
-
-        private const int PartitionKeyLength = 3;
+        private readonly INoSQLTableStorage<AzureIndex> _emailIndexStorage;
 
         public MerchantRepository(
-            INoSQLTableStorage<MerchantEntity> storage)
+            [NotNull] INoSQLTableStorage<MerchantEntity> storage, 
+            [NotNull] INoSQLTableStorage<AzureIndex> emailIndexStorage)
         {
             _storage = storage;
+            _emailIndexStorage = emailIndexStorage;
         }
 
         public async Task<IReadOnlyList<IMerchant>> GetAsync()
@@ -32,7 +32,9 @@ namespace Lykke.Service.PayMerchant.AzureRepositories
 
         public async Task<IMerchant> GetAsync(string merchantName)
         {
-            return await _storage.GetDataAsync(GetPartitionKey(merchantName), GetRowKey(merchantName));
+            return await _storage.GetDataAsync(
+                MerchantEntity.ById.GeneratePartitionKey(merchantName), 
+                MerchantEntity.ById.GenerateRowKey(merchantName));
         }
 
         public async Task<IReadOnlyList<IMerchant>> FindApiKeyAsync(string apiKey)
@@ -42,18 +44,27 @@ namespace Lykke.Service.PayMerchant.AzureRepositories
             return entities.ToList();
         }
 
-        public async Task<IReadOnlyList<IMerchant>> FindEmailAsync(string email)
+        public async Task<IMerchant> FindEmailAsync(string email)
         {
-            IList<MerchantEntity> entitites = await _storage.GetDataAsync(merchant => merchant.Email == email);
+            AzureIndex index = await _emailIndexStorage.GetDataAsync(
+                MerchantEntity.IndexByEmail.GeneratePartitionKey(email),
+                MerchantEntity.IndexByEmail.GenerateRowKey());
 
-            return entitites.ToList();
+            MerchantEntity entity = await _storage.GetDataAsync(index);
+
+            return Mapper.Map<Merchant>(entity);
         }
 
         public async Task<IMerchant> InsertAsync(IMerchant merchant)
         {
-            var entity = new MerchantEntity(GetPartitionKey(merchant.Name), GetRowKey(merchant.Name));
+            var existingEmail = await _emailIndexStorage.GetDataAsync(
+                MerchantEntity.IndexByEmail.GeneratePartitionKey(merchant.Email),
+                MerchantEntity.IndexByEmail.GenerateRowKey());
 
-            Mapper.Map(merchant, entity);
+            if (existingEmail != null)
+                throw new DuplicateMerchantEmailException(merchant.Email);
+
+            var entity = MerchantEntity.ById.Create(merchant);
             
             try
             {
@@ -64,12 +75,18 @@ namespace Lykke.Service.PayMerchant.AzureRepositories
                 throw new DuplicateMerchantNameException(merchant.Name);
             }
 
+            var index = MerchantEntity.IndexByEmail.Create(entity);
+
+            await _emailIndexStorage.InsertThrowConflict(index);
+
             return entity;
         }
 
         public async Task ReplaceAsync(IMerchant merchant)
         {
-            var entity = new MerchantEntity(GetPartitionKey(merchant.Name), GetRowKey(merchant.Name));
+            var entity = new MerchantEntity(
+                MerchantEntity.ById.GeneratePartitionKey(merchant.Name),
+                MerchantEntity.ById.GenerateRowKey(merchant.Name));
 
             Mapper.Map(merchant, entity);
 
@@ -80,31 +97,16 @@ namespace Lykke.Service.PayMerchant.AzureRepositories
 
         public async Task DeleteAsync(string merchantName)
         {
-            MerchantEntity merchantEntity =
-                await _storage.DeleteAsync(GetPartitionKey(merchantName), GetRowKey(merchantName));
+            MerchantEntity merchantEntity = await _storage.DeleteAsync(
+                MerchantEntity.ById.GeneratePartitionKey(merchantName),
+                MerchantEntity.ById.GenerateRowKey(merchantName));
 
             if (merchantEntity == null)
                 throw new MerchantNotFoundException(merchantName);
-        }
 
-        private static string GetPartitionKey(string merchantName)
-        {
-            string hash = Convert
-                .ToBase64String(SHA1.Create().ComputeHash(merchantName.ToUtf8Bytes()))
-                .Replace('/', '_');
-
-            if (!hash.IsValidPartitionOrRowKey())
-                throw new InvalidRowKeyValueException(nameof(hash), hash);
-
-            return new string(hash.Take(PartitionKeyLength).ToArray());
-        }
-
-        private static string GetRowKey(string merchantName)
-        {
-            if (!merchantName.IsValidPartitionOrRowKey())
-                throw new InvalidRowKeyValueException(nameof(merchantName), merchantName);
-
-            return merchantName;
+            await _emailIndexStorage.DeleteAsync(
+                MerchantEntity.IndexByEmail.GeneratePartitionKey(merchantEntity.Email),
+                MerchantEntity.IndexByEmail.GenerateRowKey());
         }
     }
 }
