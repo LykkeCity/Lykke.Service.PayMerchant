@@ -25,7 +25,9 @@ namespace Lykke.Service.PayMerchant.AzureRepositories
 
         public async Task<IReadOnlyList<IMerchant>> GetAsync()
         {
-            IEnumerable<MerchantEntity> entities = await _storage.GetDataAsync();
+            string emailIndexRowKey = MerchantEntity.IndexByEmail.GenerateRowKey();
+
+            IEnumerable<MerchantEntity> entities = await _storage.GetDataAsync(e => e.RowKey != emailIndexRowKey);
 
             return entities.ToList();
         }
