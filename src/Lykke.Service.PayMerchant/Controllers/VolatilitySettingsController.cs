@@ -47,7 +47,7 @@ namespace Lykke.Service.PayMerchant.Controllers
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(void), (int) HttpStatusCode.Created)]
         [ValidateModel]
-        public async Task<IActionResult> Add(AddVolatilitySettingsModel model)
+        public async Task<IActionResult> Add([FromBody] AddVolatilitySettingsModel model)
         {
             IMerchant merchant = await _merchantService.GetAsync(model.MerchantId);
 
@@ -111,7 +111,7 @@ namespace Lykke.Service.PayMerchant.Controllers
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
         [ValidateModel]
-        public async Task<IActionResult> Update(UpdateVolatilitySettingsModel model)
+        public async Task<IActionResult> Update([FromBody] UpdateVolatilitySettingsModel model)
         {
             try
             {
