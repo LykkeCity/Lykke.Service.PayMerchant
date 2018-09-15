@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using LykkePay.Common.Validation;
 
 namespace Lykke.Service.PayMerchant.Models
 {
@@ -29,5 +30,12 @@ namespace Lykke.Service.PayMerchant.Models
         /// Gets or sets merchant Lykke wallet id
         /// </summary>
         public string LwId { get; set; }
+
+        /// <summary>
+        /// Gets or sets merchant email
+        /// </summary>
+        [RowKey]
+        [Email]
+        public string Email { get; set; }
     }
 }
