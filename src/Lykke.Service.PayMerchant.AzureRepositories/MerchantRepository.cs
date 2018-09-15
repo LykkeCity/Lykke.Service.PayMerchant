@@ -59,11 +59,11 @@ namespace Lykke.Service.PayMerchant.AzureRepositories
 
         public async Task<IMerchant> InsertAsync(IMerchant merchant)
         {
-            var existingEmail = await _emailIndexStorage.GetDataAsync(
+            var existingEmailIndex = await _emailIndexStorage.GetDataAsync(
                 MerchantEntity.IndexByEmail.GeneratePartitionKey(merchant.Email),
                 MerchantEntity.IndexByEmail.GenerateRowKey());
 
-            if (existingEmail != null)
+            if (existingEmailIndex != null)
                 throw new DuplicateMerchantEmailException(merchant.Email);
 
             var entity = MerchantEntity.ById.Create(merchant);
@@ -95,6 +95,20 @@ namespace Lykke.Service.PayMerchant.AzureRepositories
             entity.ETag = "*";
 
             await _storage.ReplaceAsync(entity);
+
+            if (!string.IsNullOrEmpty(merchant.Email))
+            {
+                var existingEmailIndex = await _emailIndexStorage.GetDataAsync(
+                    MerchantEntity.IndexByEmail.GeneratePartitionKey(merchant.Email),
+                    MerchantEntity.IndexByEmail.GenerateRowKey());
+
+                if (existingEmailIndex == null)
+                {
+                    var newEmailIndex = MerchantEntity.IndexByEmail.Create(entity);
+
+                    await _emailIndexStorage.InsertThrowConflict(newEmailIndex);
+                }
+            }
         }
 
         public async Task DeleteAsync(string merchantName)

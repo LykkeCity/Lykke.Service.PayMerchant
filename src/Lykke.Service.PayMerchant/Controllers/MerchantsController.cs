@@ -151,19 +151,25 @@ namespace Lykke.Service.PayMerchant.Controllers
             }
             catch (MerchantNotFoundException e)
             {
-                _log.Warning(e.Message, context: request.ToDetails());
+                _log.Warning(e.Message, request.ToDetails());
 
                 return NotFound(ErrorResponse.Create(e.Message));
             }
             catch (DuplicateMerchantApiKeyException e)
             {
-                _log.Error(e, context: request.ToDetails());
+                _log.Error(e, request.ToDetails());
 
                 return BadRequest(ErrorResponse.Create(e.Message));
             }
             catch (DuplicateMerchantEmailException e)
             {
-                _log.Error(e, context: request.ToDetails());
+                _log.Error(e, request.ToDetails());
+
+                return BadRequest(ErrorResponse.Create(e.Message));
+            }
+            catch (MerchantEmailUpdateException e)
+            {
+                _log.Error(e, request.ToDetails());
 
                 return BadRequest(ErrorResponse.Create(e.Message));
             }

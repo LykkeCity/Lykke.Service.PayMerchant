@@ -68,7 +68,19 @@ namespace Lykke.Service.PayMerchant.Services
             }
 
             if (string.IsNullOrEmpty(srcMerchant.Email))
+            {
                 srcMerchant.Email = existingMerchant.Email;
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(existingMerchant.Email))
+                    throw new MerchantEmailUpdateException(existingMerchant.Id);
+
+                IMerchant emailMerchant = await _merchantRepository.FindEmailAsync(srcMerchant.Email);
+
+                if (emailMerchant != null)
+                    throw new DuplicateMerchantEmailException(srcMerchant.Email);
+            }
 
             await _merchantRepository.ReplaceAsync(srcMerchant);
 
