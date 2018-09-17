@@ -29,5 +29,10 @@
         /// Gets or sets the merchant Lykke wallet client id.
         /// </summary>
         public string LwId { get; set; }
+
+        /// <summary>
+        /// Gets or sets merchant email if it was not set before
+        /// </summary>
+        public string Email { get; set; }
     }
 }

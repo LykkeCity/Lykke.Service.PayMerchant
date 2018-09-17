@@ -16,8 +16,7 @@ namespace Lykke.Service.PayMerchant
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
 
             CreateMap<UpdateMerchantRequest, Merchant>(MemberList.Destination)
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Email, opt => opt.Ignore());
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Name));
 
             CreateMap<AddMerchantGroupModel, MerchantGroup>(MemberList.Destination)
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
