@@ -4,5 +4,6 @@
     {
         public string MerchantId { get; set; }
         public string ZeroCoverageAssetPairs { get; set; }
+        public bool IsDeltaSpreadFixed { get; set; }
     }
 }

@@ -48,6 +48,8 @@ namespace Lykke.Service.PayMerchant.AzureRepositories
                     if (!string.IsNullOrEmpty(src.ZeroCoverageAssetPairs))
                         entity.ZeroCoverageAssetPairs = src.ZeroCoverageAssetPairs;
 
+                    entity.IsDeltaSpreadFixed = src.IsDeltaSpreadFixed;
+
                     return entity;
                 });
 

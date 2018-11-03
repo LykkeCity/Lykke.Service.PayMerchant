@@ -14,5 +14,10 @@
         /// Gets or sets zero volatility coverage asset pairs, semicolon separated
         /// </summary>
         public string ZeroCoverageAssetPairs { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether delta spread is fixed for the merchant or not
+        /// </summary>
+        public bool IsDeltaSpreadFixed { get; set; }
     }
 }
