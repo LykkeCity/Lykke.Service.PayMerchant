@@ -11,8 +11,13 @@
         public string MerchantId { get; set; }
 
         /// <summary>
-        /// Gets or sets zero coverage asset paits, semicolon separated
+        /// Gets or sets zero coverage asset pairs, semicolon separated
         /// </summary>
         public string ZeroCoverageAssetPairs { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag whether delta spread if fixed for the merchant or not
+        /// </summary>
+        public bool IsDeltaSpreadFixed { get; set; }
     }
 }
