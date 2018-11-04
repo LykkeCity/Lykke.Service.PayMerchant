@@ -59,7 +59,8 @@ namespace Lykke.Service.PayMerchant.Controllers
                 await _volatilitySettingsService.AddAsync(new VolatilitySettings
                 {
                     MerchantId = model.MerchantId,
-                    ZeroCoverageAssetPairs = model.ZeroCoverageAssetPairs
+                    ZeroCoverageAssetPairs = model.ZeroCoverageAssetPairs,
+                    IsDeltaSpreadFixed = model.IsDeltaSpreadFixed
                 });
 
                 return Created(Url.Action("Get", new {merchantId = model.MerchantId}), null);
@@ -94,7 +95,8 @@ namespace Lykke.Service.PayMerchant.Controllers
             return Ok(new VolatilitySettingsResponse
             {
                 MerchantId = settings.MerchantId,
-                ZeroCoverageAssetPairs = settings.ZeroCoverageAssetPairs
+                ZeroCoverageAssetPairs = settings.ZeroCoverageAssetPairs,
+                IsDeltaSpreadFixed = settings.IsDeltaSpreadFixed
             });
         }
 
@@ -119,7 +121,8 @@ namespace Lykke.Service.PayMerchant.Controllers
                     new VolatilitySettings
                     {
                         MerchantId = model.MerchantId,
-                        ZeroCoverageAssetPairs = model.ZeroCoverageAssetPairs
+                        ZeroCoverageAssetPairs = model.ZeroCoverageAssetPairs,
+                        IsDeltaSpreadFixed = model.IsDeltaSpreadFixed
                     });
 
                 if (updatedSettings == null)

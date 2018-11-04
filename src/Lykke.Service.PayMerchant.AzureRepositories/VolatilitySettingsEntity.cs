@@ -14,9 +14,24 @@ namespace Lykke.Service.PayMerchant.AzureRepositories
     {
         private const int PartitionKeyLength = 3;
 
+        private bool _isDeltaSpreadFixed;
+
         public string MerchantId { get; set; }
 
         public string ZeroCoverageAssetPairs { get; set; }
+
+        public bool IsDeltaSpreadFixed
+        {
+            get => _isDeltaSpreadFixed;
+            set
+            {
+                if (_isDeltaSpreadFixed != value)
+                {
+                    _isDeltaSpreadFixed = value;
+                    MarkValueTypePropertyAsDirty(nameof(IsDeltaSpreadFixed));
+                }
+            }
+        } 
 
         public static class ByMerchant
         {
@@ -41,7 +56,8 @@ namespace Lykke.Service.PayMerchant.AzureRepositories
                     PartitionKey = GeneratePartitionKey(src.MerchantId),
                     RowKey = GenerateRowKey(src.MerchantId),
                     MerchantId = src.MerchantId,
-                    ZeroCoverageAssetPairs = src.ZeroCoverageAssetPairs
+                    ZeroCoverageAssetPairs = src.ZeroCoverageAssetPairs,
+                    IsDeltaSpreadFixed = src.IsDeltaSpreadFixed
                 };
             }
         }

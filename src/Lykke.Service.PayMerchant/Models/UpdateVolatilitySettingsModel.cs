@@ -16,9 +16,16 @@ namespace Lykke.Service.PayMerchant.Models
         public string MerchantId { get; set; }
 
         /// <summary>
-        /// Gets or sets zero coverage asset paits, semicolon separated
+        /// Gets or sets zero coverage asset pairs, semicolon separated
         /// </summary>
         [Required]
         public string ZeroCoverageAssetPairs { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets flag whether delta spread is fixed for the merchant or not 
+        /// </summary>
+        [Required]
+        public bool IsDeltaSpreadFixed { get; set; }
     }
 }
