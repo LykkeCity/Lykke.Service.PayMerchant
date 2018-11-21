@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Lykke.Common.Log;
 using Lykke.Service.PayMerchant.Core.Domain;
 using Lykke.Service.PayMerchant.Core.Exceptions;
+using Lykke.Service.PayMerchant.Core.Extensions;
 using Lykke.Service.PayMerchant.Core.Services;
 
 namespace Lykke.Service.PayMerchant.Services
@@ -35,6 +36,8 @@ namespace Lykke.Service.PayMerchant.Services
 
         public async Task<IMerchant> CreateAsync(IMerchant merchant)
         {
+            merchant.TrimProperties();
+
             IReadOnlyList<IMerchant> apiKeyMerchants = await _merchantRepository.FindApiKeyAsync(merchant.ApiKey);
 
             if (apiKeyMerchants.Any())
@@ -54,6 +57,8 @@ namespace Lykke.Service.PayMerchant.Services
 
         public async Task UpdateAsync(IMerchant srcMerchant)
         {
+            srcMerchant.TrimProperties();
+
             IMerchant existingMerchant = await _merchantRepository.GetAsync(srcMerchant.Name);
 
             if (existingMerchant == null)
