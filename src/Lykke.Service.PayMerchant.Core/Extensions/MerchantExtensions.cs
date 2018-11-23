@@ -11,7 +11,7 @@ namespace Lykke.Service.PayMerchant.Core.Extensions
         {
             merchant.Name = merchant.Name.Trim();
             merchant.DisplayName = merchant.DisplayName.Trim();
-            merchant.Email = merchant.Email.Trim();
+            merchant.Email = merchant.Email?.Trim();
         }
     }
 }
